@@ -24,7 +24,7 @@ export const fetchCity = createAsyncThunk('weather/fetchCity', async (cityName) 
 export const weatherSlice = createSlice({
   name: 'weather',
   initialState: {
-    weather: null,
+    weather: [],
     city: null,
     status: 'idle',
     error: null,
@@ -38,7 +38,7 @@ export const weatherSlice = createSlice({
       })
       .addCase(fetchWeather.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.weather = action.payload;
+        state.weather.push(action.payload);
         state.error = null;
       })
       .addCase(fetchWeather.rejected, (state, action) => {

@@ -5,8 +5,9 @@ import { fetchWeather, fetchCity } from './store/slices/weather';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import { InputField } from './components/cityInput';
+import { AllData } from './components/allData';
 import React from 'react';
-import { Sparklines } from 'react-sparklines';
+import { Sparklines, SparklinesLine, SparklinesReferenceLine } from 'react-sparklines';
 
 
 export default function Home() {
@@ -30,7 +31,7 @@ export default function Home() {
     return (
       <main>
         <InputField />
-        <p>{weather.list.map((datum) => datum.main.temp)}</p>
+        <AllData />
       </main>
     )
   }
