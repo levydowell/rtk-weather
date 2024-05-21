@@ -1,19 +1,15 @@
 'use client';
-import styles from './page.module.css';
-import { useEffect } from 'react';
-import { fetchWeather, fetchCity } from './store/slices/weather';
-import { useDispatch, useSelector } from 'react-redux';
-import { useState } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { useSelector } from 'react-redux';
 import { InputField } from './components/cityInput';
 import { AllData } from './components/allData';
 import React from 'react';
-
 
 export default function Home() {
   
   const weather = useSelector((state) => state.weather.weather);
   
-  if (weather == null) {
+  if (weather === null) {
     return (
       <main>
         <InputField />
@@ -22,11 +18,12 @@ export default function Home() {
   } else {
     return (
       <main>
-        <InputField />
-        <AllData />
+        <div className='set-margin'>
+         <InputField />
+         <AllData />
+        </div>
       </main>
     )
   }
 
-  
 }

@@ -1,17 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 
-export const fetchWeather = createAsyncThunk('weather/fetchData', async ({latitude, longitude}) => {
-  try {
-
-    const response = await axios.get(`http://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=b68f55460cf44818aabff0456c2d1963`);
-    return response.data;
-  } catch (error) {
-    throw Error(error.response.data.message);
-  }
-});
-
+/**
+ * createAsyncThunk that fetches the latitude and longitude of entered city.
+ */
 export const fetchCity = createAsyncThunk('weather/fetchCity', async (cityName) => {
   try {
     const response = await axios.get(`http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=5&appid=b68f55460cf44818aabff0456c2d1963`);
@@ -21,6 +13,22 @@ export const fetchCity = createAsyncThunk('weather/fetchCity', async (cityName) 
   }
 });
 
+/**
+ * createAsyncThunk that fetches weather data from the lat/lon coordinates of selected city.
+ */
+export const fetchWeather = createAsyncThunk('weather/fetchData', async ({latitude, longitude}) => {
+  try {
+
+    const response = await axios.get(`http://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&units=imperial&appid=b68f55460cf44818aabff0456c2d1963`);
+    return response.data;
+  } catch (error) {
+    throw Error(error.response.data.message);
+  }
+});
+
+/**
+ * Redux slice to store the state of the weather and selected city.
+ */
 export const weatherSlice = createSlice({
   name: 'weather',
   initialState: {
@@ -30,6 +38,7 @@ export const weatherSlice = createSlice({
     error: null,
   },
   reducers: {},
+  //reducers for asyncThunks
   extraReducers: (builder) => {
     builder
       .addCase(fetchWeather.pending, (state) => {
